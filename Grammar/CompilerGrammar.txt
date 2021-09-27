@@ -1,0 +1,92 @@
+This assignment was locked Nov 2 at 11:59pm.
+In this assignment, you will practice working with the grammar for our Compiler project sequence.  You will answer a series of questions analyzing what is possible [valid or invalid] for our grammar.
+
+Submission
+Submit your answers by completing Compiler Part 1 and Homework #1.  Using Canvas navigation, both are located under the Quizzes menu option.
+
+Grammar
+Here is the grammar for the sample language we will be using in the Compiler project sequence.  Note, keywords are all UPPERcase.  Literals are highlighted by red text.
+
+source ::= statement*
+statement ::= declaration-statement | assignment-statement | expression-statement | if-statement | while-statement
+
+assignment-statement ::= identifier = expression ;
+declaration-statement ::= LET identifier : identifier ( = expression)? ;
+expression-statement ::= expression ;
+if-statement ::= IF expression THEN statement* ( ELSE statement* )? END
+while-statement ::= WHILE expression DO statement* END
+
+expression ::= equality-expression
+equality-expression ::= additive-expression ( ( == | != ) additive-expression )*
+additive-expression ::= multiplicative-expression ( ( + | - ) multiplicative-expression )*
+multiplicative-expression ::= primary-expression ( ( * | / ) primary-expression )*
+
+primary-expression ::=
+    boolean | decimal | integer | string |
+    identifier ( ( (expression ( , expression )* )? ) )? |
+    ( expression )
+
+boolean ::= TRUE | FALSE
+decimal ::= integer . ( 0..9 )+
+integer ::= 0 | 1..9 ( 0..9 )*
+string ::= " ( blank_space | _ | A..Z | a..z | 0..9 | ! | ? | . | * | / | + | - )* "
+
+identifier ::= ( _ | A..Z | a..z ) ( _ | A..Z | a..z | 0..9 ) *
+RailRoad Diagram Generation
+
+In this copy of the grammar, note literals are highlighted by single quotes.  Using a tool like Railroad Diagram Generator (Links to an external site.), you can view the diagram in a more graphical format which may help with understanding.
+
+source ::= statement*
+statement ::= declaration-statement | assignment-statement | expression-statement | if-statement | while-statement
+
+declaration-statement ::= 'LET' identifier ':' identifier ( '=' expression)? ';'
+assignment-statement ::= identifier '=' expression ';'
+expression-statement ::= expression ';'
+if-statement ::= 'IF' expression 'THEN' statement* ( 'ELSE' statement* )? 'END'
+while-statement ::= 'WHILE' expression 'DO' statement* 'END'
+
+expression ::= equality-expression
+
+equality-expression ::= additive-expression ( ( '==' | '!=' ) additive-expression )*
+additive-expression ::= multiplicative-expression ( ( '+' | '-' ) multiplicative-expression )*
+multiplicative-expression ::= primary-expression ( ( '*' | '/' ) primary-expression )*
+
+primary-expression ::=
+    boolean | decimal | integer | string |
+    identifier ( '(' (expression ( ',' expression )* )? ')' )? |
+    '(' expression ')'
+
+boolean ::= 'TRUE' | 'FALSE'
+decimal ::= integer '.' [0-9]+
+integer ::= '0' | [1-9] [0-9]*
+
+string ::= '"' [ _A-Za-z0-9!?.*/+-]* '"'
+
+identifier ::= [_A-Za-z] [_A-Za-z0-9]*
+A Few Points of Note
+Strings
+
+Start and end with a double quote (").
+Strings are limited to the characters listed:  _A-Za-z0-9!?.+-*/
+Note a blank space is allowed within a string.
+Escape sequence characters are not supported.
+Whitespace
+
+Outside of strings is ignored [discarded], merely providing separation between tokens.
+Within strings, only the <blank space> is supported.
+Functions
+
+We will discuss available functions as the Compiler progresses.
+For now, you have access to the function:
+PRINT ( expression )
+Variable Types
+
+(You do not need these yet, since are not type checking at this point.  However they will help you out soon... so here they are.  Note they are all uppercase.):
+
+BOOLEAN
+DECIMAL
+INTEGER
+STRING
+Operators
+
++, -, *, / will perform integer operations when using integer operands.

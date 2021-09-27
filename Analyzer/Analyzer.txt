@@ -1,0 +1,84 @@
+In this assignment, you will implement the generator Analyzer.java for our grammar, given in Compiler Part 1: Grammar.  Some initial structure has been provided to help you get started.  We will run a test submission on solutions submitted by 11:59 PM on Wednesday, December 9, 2020.  Feedback provided on Thursday.
+
+Submission
+You will submit Analyzer.java, which implements your semantic analysis. The Ast class has been updated (again) to include structure for your implementation.  You will not modify (and therefore not submit) Ast.java, in addition you do not need to submit any additional tests you add to AnalyzerTests.java.  There are also two new classes, AnalysisException.java, Scope.java, and Stdlib.java for you to download incorporate.
+
+Semantic Analysis Overview
+Recall that the job of semantic analysis is determine if the semantic structure of the tokens and Ast matches with the programming language.
+
+The following items were not be handled by the Generator, therefore will be addressed now.
+Identifiers for variable types will be converted to their correct Java type.
+PRINT will be converted to System.out.println.
+Finally, you will perform type and variable validation using the structure provided, including Scope.java.
+Source
+
+Rewrites the AST and throws an exception if:  statements is empty.
+
+Expression
+
+Rewrites the AST and throws an exception if:  the contained expression is not a {@link Ast.Expression.Function}, as any other expression cannot cause a side effect (thus, doing no useful work).
+
+Declaration
+
+Rewrites the AST and throws an exception if:
+
+A variable is already defined with the given name.
+The type of the variable is VOID (not allowed).
+The value, if present, is NOT assignable to the variable's type.
+The variable's type must be retrieved via the Stdlib class. Additionally, the type of the declaration statement should be changed to the jvmName of the type, not the original name.
+
+Assignment
+
+Rewrites the AST and throws an exception if:
+
+A variable is not already defined with the given name.
+The value is not assignable to the variable's type.
+If
+
+Rewrites the AST and throws an exception if:
+
+The condition does not evaluate to a BOOLEAN
+The THEN statements list is empty (ELSE can be empty)
+Both the THEN and ELSE statements should be visited in new scopes (not the same one between them either).
+
+While
+
+Rewrites the AST and throws an exception if:  The condition does not evaluate to a BOOLEAN.  The body statements should be visited in a new scope.
+
+Literal
+
+Rewrites the AST with the literal's type as well as any other behavior as described below:
+
+BOOLEAN: no additional behavior (just the BOOLEAN type).
+INTEGER: changes the value from being a BigInteger to an Integer, throwing an AnalysisException if it is out of range. There are methods in the class BigInteger which can help with this.
+DECIMAL: changes the value from being a BigDecimal to a Double, throwing an AnalysisException if it is out of range. This is a tricky one, but the method you should use here is {@link BigDecimal#doubleValue()}. Check the javadocs to see what happens if the value doesn't fit into a double, and use that result to do the necessary check.
+STRING: verify that the string only contains allowed characters, which are [A-Za-z0-9_!?.+-/* ] (note the end space), as specified in part 1.
+Group
+
+Rewrites the AST to have the same type as the contained expression.
+
+Binary
+
+Rewrites the AST and performs type checking according to the following:
+
+{@code ==, !=}: Accepts any type except VOID, produces a BOOLEAN.
+{@code +}: Accepts any type except VOID. If either side is a STRING, produces a STRING. Otherwise, produces a number type in the same way as below.
+{@code -, *, /}: Accepts INTEGER and DECIMAL types. If both sides are INTEGERs it produces an INTEGER, otherwise produces a DECIMAL.
+Variable
+
+Rewrites the AST with the type of the variable currently stored under the given name. Throws an exception if:  The variable is not defined.
+
+Function
+
+Rewrites the AST and performs type checking according to the following:
+
+Gets the function from the Stdlib with the given name and arity (the number of arguments), throwing an exception if it is not defined.
+Checks that the type of each argument is assignable to the type of the corresponding parameters in the function.
+Rewrites the AST so it's name is the jvmName of the Stdlib function.
+checkAssignable
+
+Throws an AnalysisException if the first type is NOT assignable to the target type.  A type is assignable if and only if one of the following is true:
+
+The types are equal, as according to Object#equals.
+The first type is an INTEGER and the target type is DECIMAL.
+The first type is not VOID and the target type is ANY.

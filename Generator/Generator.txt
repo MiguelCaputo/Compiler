@@ -1,0 +1,70 @@
+In this assignment, you will implement the generator Generator.java for our grammar, given in Compiler Part 1: Grammar. Some initial structure has been provided to help you get started.  We will run a test submission on solutions submitted by 11:59 PM on Saturday, November 28, 2020.  Feedback provided on Sunday.
+
+Submission
+You will submit Generator.java, which implements your generator. The Ast class has been updated to include structure for implementing the Visitor pattern.  You will not modify (and therefore not submit) Ast.java, in addition you do not need to submit any additional tests you add to GeneratorTests.java.
+
+Generator Overview
+Recall that the job of the generator is to convert the Ast into Java code.  Recall, from our lecture discussion, there are different types of code that could be generated.  For this project, we have chosen to generate Java source code (similar to the process C++ uses, generating C code).  Then, we can compile and execute the Java source code using the standard JVM.  Note, the class Generator implements the interface Visitor (contained in Ast.java, see below).
+
+Postponed to Part 5
+
+The following items will not be handled here by the Generator at this time.  Instead, we will handle them by cleaning the Ast.  This cleaning step will be completed in Part 5 of the Compiler project.  Examples of each of these points is provided below.
+The identifiers for variable types are not converted to their correct Java type here in Part 4.  Instead, the type stored within the Ast will merely be used as if were correct Java code.  Observe in Part 5, all we will need to do us clean the types within the Ast before calling the Generator.
+Similarly, PRINT will not be converted to System.out.print until Part 5 (again performed by the same process).
+Finally, we are not building/checking a symbol table in Part 4.  In Part 5, we will check for correct variable declaration and type consistency.
+Formatting
+
+The Java source code you write must be formatted in a consistent manner.  The newline and print methods given will assist you in doing this, provided that you update the indent property to reflect the current level of indentation.  The newline can be used by passing in the indent property or by passing a hardcoded number for known cases.  An example known indentation is observed when declaring the class itself, you know the indentation will be at level 0 (since there is no blocking yet, there is no indentation).  See the Source example that follows in the next section.
+
+You are required to follow the formatting in exactly the same manner as it is given here.  Detailed examples are follow here for all of the nodes in our grammar our nodes.  As well, examples are provided in GeneratorTests.java.
+
+Source
+
+In order to build the code from the Source node, you will need to create a public final class Main and the main method.  Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.  
+
+Expression
+
+In the sample expressions shown, some of the variables are not declared and the ones that are have not been converted to valid Java types.  The structure follows Java (the current "believed" type is placed in the correct Java position for a type declaration).  Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+Declaration
+
+When variables are declared, their format in our grammar differs from the Java format.  You will need to generate Java code based upon what is provided from the source in our grammar.  Here is sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+Assignment
+
+Sample assignments are shown throughout the examples in this document, including in the Expression and Declaration samples.
+
+If
+
+The IF construction from our grammar must be transformed into a valid Java if statement.  Recall, an optional ELSE is possible.  However, there is no concept of if else in our grammar.
+
+In addition to the IF example given within this section, there is an IF example included in the WHILE sample.  Note, in the IF within the WHILE, some of the statements of the IF or ELSE block are left empty.  Observe how the {}s are placed on the same line, directly next to one another in these cases.  Also, notice if the ELSE block has not statements, then the entire else is left out of the Java code generated (no step is performed, the else is unnecessary!).
+
+Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+While
+
+Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+Literal
+
+In our grammar, we wrapped our DECIMAL and INTEGER literals as BigDecimal and BigInteger objects.  They will need to be unwrapped into the Java types double and int respectively.  STRING values will be Strings.  BOOLEAN values will need to be converted to boolean.  Note, in our grammar, TRUE and FALSE are uppercased, while in Java they are lowercase.  Previous examples have included DECIMAL, INTEGER, and STRING values.  The example that follows here shows a usage of the IF and ELSE combination as well as the usage of a BOOLEAN and the literal conversion required.  Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+Group
+
+Here is a sample from our grammar source.txtPreview the document and the corresponding Main.javaPreview the document.
+
+Binary
+
+Samples of binary expressions have been shown in many of the other samples here.
+
+Variable
+
+Samples of variables have been shown in many of the other samples here.
+
+Function
+
+Samples of functions have been shown by cases using PRINT.
+
+AST Representation
+Our class Ast contains the same subclasses as in Compiler Part 3: Parser, representing the more specific elements of the AST and the code that is being parsed.  Ast has been updated to include the interface Visitor.  As we have discussed, the class structure follows an OO approach driven by the production rules in our grammar.  You must download and use the updated Ast.java provided in the next section.

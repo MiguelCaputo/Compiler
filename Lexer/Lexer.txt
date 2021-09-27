@@ -1,0 +1,14 @@
+In this assignment, you will implement the lexer, Lexer.java, for our grammar, given in Compiler Part 1: Grammar. Some initial structure has been provided to help you get started. You can modify this if you would like, however you need to keep Token, ParseException, and the static Lexer#lex method the same - these are used in the JUnit tests.
+
+Submission
+You will submit Lexer.java, which implements your lexer. The Token and ParseException classes will be the same, in addition you do not need to submit any additional tests you add to LexerTests.java.
+
+Grammar for Our Lexer
+Here is the grammar for the sample language we will be using in the Compiler project sequence.  Note, keywords are all UPPERcase.  Literals are highlighted by red text.  We will delay some of our exception checking to later in the process, this will make lexing a simpler (and more similar to what you did in Interpreter Part 2: Lexer) exercise.
+
+identifier ::= [A-Za-z_] [A-Za-z0-9_]*
+integer ::= [0-9]+
+decimal ::= [0-9]+ . [0-9]+
+string ::= " [^"]* "
+operator ::= == | != | any_non_whitespace_character
+whitespace ::= [ \n\r\t]

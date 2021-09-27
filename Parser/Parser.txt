@@ -1,0 +1,29 @@
+In this assignment, you will implement the parser Parser.java for our grammar, given in Compiler Part 1: Grammar. Some initial structure has been provided to help you get started.
+
+Submission
+You will submit Parser.java, which implements your parser. The Ast class will be the same, in addition you do not need to submit any additional tests you add to ParserTests.java.
+
+Parser Overview
+Recall that the job of the parser is to convert the tokens emitted by the lexer into an Abstract Syntax Tree (AST) which represents the structural meaning of the code.
+
+AST Representation
+Our class Ast contains a series of subclasses, representing the more specific elements of the AST and the code that is being parsed.  As we have discussed, the class structure follows an OO approach driven by the production rules in our grammar.
+
+The Ast is the root of our inheritance hierarchy, including the subclasses:
+
+class Source:  the starting point of our code.
+class Statement:  representing statements within our grammar, including the subclasses:
+class Declaration:  representing the declaration of variables.
+class Assignment:  representing the assignment of a value to a variable.
+class If:  representing if statements within our grammar.
+class While:  representing while (loops) statements within our grammar.
+class Expression:  representing the different types of expressions within our grammar, including the subclasses:
+class Literal:  representing literal values within our grammar.  Recall, the four types of literals in our grammar are given here.  As well, the runtime type for each is given.
+BOOLEAN:  and represented using the Java class Boolean (Links to an external site.).
+INTEGER:  and represented using the Java class BigInteger (Links to an external site.).
+DECIMAL:  and represented using the Java class BigDecimal (Links to an external site.).
+STRING:  and represented using the Java class String (Links to an external site.).
+class Group:  representing grouped expressions.
+class Binary:  representing binary expressions.
+class Variable:  representing variables.
+class Function:  representing functions.
